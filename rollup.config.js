@@ -1,3 +1,4 @@
+import path from 'path'
 import svelte from 'rollup-plugin-svelte'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
@@ -6,7 +7,9 @@ import { terser } from 'rollup-plugin-terser'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import css from 'rollup-plugin-css-only'
+import alias from '@rollup/plugin-alias'
 
+const projectRootDir = path.resolve(__dirname)
 const production = !process.env.ROLLUP_WATCH
 
 function serve() {
@@ -64,6 +67,19 @@ export default {
       dedupe: ['svelte'],
     }),
     commonjs(),
+    alias({
+      entries: [
+        { find: '@/*', replacement: path.resolve(projectRootDir, '.') },
+        {
+          find: '@/layout',
+          replacement: path.resolve(projectRootDir, 'src/layout'),
+        },
+        {
+          find: '@/components',
+          replacement: path.resolve(projectRootDir, 'src/components'),
+        },
+      ],
+    }),
     typescript({
       sourceMap: !production,
       inlineSources: !production,
