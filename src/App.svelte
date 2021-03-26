@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Todos from '@/components/Todos.svelte'
+  import Todos from '@/components/todos.svelte'
 </script>
 
 <main>

@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: {
     enabled: !process.env.ROLLUP_WATCH,
@@ -11,7 +13,11 @@ module.exports = {
   },
   darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   variants: {
     extend: {},
