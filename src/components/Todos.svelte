@@ -1,1 +1,1 @@
-<h1>Svelte To-do App</h1>
+<h1 class="font-extrabold text-2xl">Svelte To-do App</h1>
