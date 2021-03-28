@@ -4,8 +4,7 @@
   import FilterButtons from '@/components/filter-buttons.svelte'
   import TodoItem from '@/components/todo-item.svelte'
   import MoreActions from '@/components/more-actions.svelte'
-
-  type Todos = Todo[]
+  import { filterTodos } from '@/utils/filter-todos'
 
   // props
   export let todos = []
@@ -38,18 +37,6 @@
 
   function removeCompleted() {
     todos = todos.filter((todo) => !todo.completed)
-  }
-
-  // utility
-  function filterTodos(filter: Filters, todos: Todos): Todos {
-    switch (filter) {
-      case Filters.ACTIVE:
-        return todos.filter((todo) => !todo.completed)
-      case Filters.COMPLETED:
-        return todos.filter((todo) => todo.completed)
-      default:
-        return todos
-    }
   }
 </script>
 
@@ -95,6 +82,8 @@
 
   <!-- More Actions -->
   <MoreActions
+    {todos}
+    {filter}
     on:toggleCompleted={(e) => toggleCompleted(e.detail.completed)}
     on:removeCompleted={() => removeCompleted()}
   />
