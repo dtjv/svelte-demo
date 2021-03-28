@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, tick } from 'svelte'
   import type { Todo, UpdatedTodo } from '@/types/todo.type'
 
   // props
@@ -9,10 +9,11 @@
   const dispatch = createEventDispatcher()
   let isEditing = false
   let task = todo.task
+  let taskEl: HTMLElement
 
-  // listeners on dispatched events get a `detail` prop on `event`. i added an
-  // object on `detail` with the name of the data. to access:
-  // `event.detail.todo`
+  // listeners on dispatched events get a `detail` prop on `event`. for
+  // clarity, i added an object on `detail` with the name of the data. see
+  // code in `todo-list.svelte`.
   function updateTodo(updatedTodo: UpdatedTodo) {
     todo = { ...todo, ...updatedTodo }
     dispatch('update', { todo })
@@ -32,8 +33,12 @@
     dispatch('remove', { todo })
   }
 
-  function onEdit() {
+  // after setting `isEditing`, svelte needs to re-render the dom, and mount
+  // the taskEl node. so, we wait a tick before accessing `taskEl`.
+  async function onEdit() {
     isEditing = true
+    await tick()
+    taskEl.focus()
   }
 
   function onToggle() {
@@ -57,6 +62,7 @@
           autocomplete="off"
           placeholder="Add a task (i.e. Buy Groceries)"
           bind:value={task}
+          bind:this={taskEl}
         />
       </label>
       <button type="button" on:click={onCancel}>
