@@ -71,8 +71,8 @@ export default {
       entries: [
         { find: '@/*', replacement: path.resolve(projectRootDir, '.') },
         {
-          find: '@/layout',
-          replacement: path.resolve(projectRootDir, 'src/layout'),
+          find: '@/types',
+          replacement: path.resolve(projectRootDir, 'src/types'),
         },
         {
           find: '@/components',
