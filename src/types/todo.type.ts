@@ -3,3 +3,5 @@ export type Todo = {
   task: string
   completed: boolean
 }
+
+export type UpdatedTodo = Partial<Omit<Todo, 'id'>>

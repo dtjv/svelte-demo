@@ -21,6 +21,11 @@
     todos = todos.filter((t) => t.id !== todo.id)
   }
 
+  function updateTodo(updatedTodo: Todo) {
+    const index = todos.findIndex((t) => t.id === updatedTodo.id)
+    todos[index] = { ...todos[index], ...updatedTodo }
+  }
+
   function addTodo() {
     todos = [...todos, { id: newTodoId, task: newTask, completed: false }]
     newTask = ''
@@ -53,7 +58,7 @@
         placeholder="Add a task (i.e. Buy Groceries)"
         bind:value={newTask}
       />
-      <button type="submit">
+      <button type="submit" disabled={!newTask}>
         Add
         <span class="sr-only">new task</span>
       </button>
@@ -69,7 +74,11 @@
   <!-- TodoList -->
   <ul role="list" aria-labelledby="list-heading">
     {#each filterTodos(filter, todos) as todo (todo.id)}
-      <TodoItem {todo} on:remove={(e) => removeTodo(e.detail.todo)} />
+      <TodoItem
+        {todo}
+        on:update={(e) => updateTodo(e.detail.todo)}
+        on:remove={(e) => removeTodo(e.detail.todo)}
+      />
     {:else}
       <li>nothing to do</li>
     {/each}
