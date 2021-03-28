@@ -96,6 +96,6 @@
   <!-- More Actions -->
   <MoreActions
     on:toggleCompleted={(e) => toggleCompleted(e.detail.completed)}
-    on:removeCompleted={(e) => removeCompleted()}
+    on:removeCompleted={() => removeCompleted()}
   />
 </div>
