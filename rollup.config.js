@@ -75,6 +75,10 @@ export default {
           replacement: path.resolve(projectRootDir, 'src/types'),
         },
         {
+          find: '@/utils',
+          replacement: path.resolve(projectRootDir, 'src/utils'),
+        },
+        {
           find: '@/components',
           replacement: path.resolve(projectRootDir, 'src/components'),
         },
