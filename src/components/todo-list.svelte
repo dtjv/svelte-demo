@@ -3,6 +3,7 @@
   import { Filters } from '@/types/filters.enum'
   import FilterButtons from '@/components/filter-buttons.svelte'
   import TodoItem from '@/components/todo-item.svelte'
+  import MoreActions from '@/components/more-actions.svelte'
 
   type Todos = Todo[]
 
@@ -29,6 +30,14 @@
   function addTodo() {
     todos = [...todos, { id: newTodoId, task: newTask, completed: false }]
     newTask = ''
+  }
+
+  function toggleCompleted(completed: boolean) {
+    todos = todos.map((todo) => ({ ...todo, completed }))
+  }
+
+  function removeCompleted() {
+    todos = todos.filter((todo) => !todo.completed)
   }
 
   // utility
@@ -83,4 +92,10 @@
       <li>nothing to do</li>
     {/each}
   </ul>
+
+  <!-- More Actions -->
+  <MoreActions
+    on:toggleCompleted={(e) => toggleCompleted(e.detail.completed)}
+    on:removeCompleted={(e) => removeCompleted()}
+  />
 </div>
