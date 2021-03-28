@@ -1,12 +1,18 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
 
   const dispatch = createEventDispatcher()
   let newTask = ''
+  let newTaskEl: HTMLElement
 
+  // lifecycle
+  onMount(() => newTaskEl.focus())
+
+  // handlers
   function addTodo() {
     dispatch('add', { newTask })
     newTask = ''
+    newTaskEl.focus()
   }
 
   function onCancel() {
@@ -25,6 +31,7 @@
       autocomplete="off"
       placeholder="Add a task (i.e. Buy Groceries)"
       bind:value={newTask}
+      bind:this={newTaskEl}
     />
     <button type="submit" disabled={!newTask}>
       Add
