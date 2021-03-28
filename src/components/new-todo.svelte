@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
+  import { selectOnFocus } from '@/actions/select-onfocus'
 
   const dispatch = createEventDispatcher()
   let newTask = ''
@@ -32,6 +33,7 @@
       placeholder="Add a task (i.e. Buy Groceries)"
       bind:value={newTask}
       bind:this={newTaskEl}
+      use:selectOnFocus
     />
     <button type="submit" disabled={!newTask}>
       Add

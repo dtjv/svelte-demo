@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, tick } from 'svelte'
   import type { Todo, UpdatedTodo } from '@/types/todo.type'
+  import { selectOnFocus } from '@/actions/select-onfocus'
 
   // props
   export let todo: Todo
@@ -63,6 +64,7 @@
           placeholder="Add a task (i.e. Buy Groceries)"
           bind:value={task}
           bind:this={taskEl}
+          use:selectOnFocus
         />
       </label>
       <button type="button" on:click={onCancel}>
