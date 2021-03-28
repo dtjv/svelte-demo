@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script lang="ts">
   import type { Todo } from '@/types/todo.type'
   import TodoList from '@/components/todo-list.svelte'
