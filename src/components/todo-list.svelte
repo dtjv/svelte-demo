@@ -1,16 +1,17 @@
 <script lang="ts">
   import type { Todo } from '@/types/todo.type'
   import { Filters } from '@/types/filters.enum'
-  import FilterButtons from '@/components/filter-buttons.svelte'
-  import TodoItem from '@/components/todo-item.svelte'
-  import MoreActions from '@/components/more-actions.svelte'
   import { filterTodos } from '@/utils/filter-todos'
+
+  import TodoItem from '@/components/todo-item.svelte'
+  import NewTodo from '@/components/new-todo.svelte'
+  import MoreActions from '@/components/more-actions.svelte'
+  import FilterButtons from '@/components/filter-buttons.svelte'
 
   // props
   export let todos = []
 
   // local, reactive
-  let newTask = ''
   let filter: Filters = Filters.ALL
   $: numTodos = todos.length
   $: numCompletedTodos = todos.filter((todo) => todo.completed).length
@@ -26,7 +27,7 @@
     todos[index] = { ...todos[index], ...updatedTodo }
   }
 
-  function addTodo() {
+  function addTodo(newTask: string) {
     todos = [...todos, { id: newTodoId, task: newTask, completed: false }]
     newTask = ''
   }
@@ -45,21 +46,7 @@
   <h1 class="text-2xl font-extrabold">Svelte To-do App</h1>
 
   <!-- NewTodo -->
-  <form on:submit|preventDefault={addTodo}>
-    <label>
-      <h2>What needs to be done?</h2>
-      <input
-        type="text"
-        autocomplete="off"
-        placeholder="Add a task (i.e. Buy Groceries)"
-        bind:value={newTask}
-      />
-      <button type="submit" disabled={!newTask}>
-        Add
-        <span class="sr-only">new task</span>
-      </button>
-    </label>
-  </form>
+  <NewTodo on:add={(e) => addTodo(e.detail.newTask)} />
 
   <!-- Filter -->
   <FilterButtons bind:filter />
