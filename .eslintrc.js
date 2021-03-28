@@ -29,5 +29,7 @@ module.exports = {
     '.eslintrc.js',
     '.prettierrc.js',
     'rollup.config.js',
+    'tailwind.config.js',
+    'postcss.config.js',
   ],
 }
