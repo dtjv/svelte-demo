@@ -1,25 +1,30 @@
 <script lang="ts">
   import type { Todo } from '@/types/todo.type'
+  import type { Todos } from '@/types/todos.type'
   import { Filters } from '@/types/filters.enum'
   import { filterTodos } from '@/utils/filter-todos'
-
+  import TodoStatus from '@/components/todo-status.svelte'
   import TodoItem from '@/components/todo-item.svelte'
   import NewTodo from '@/components/new-todo.svelte'
   import MoreActions from '@/components/more-actions.svelte'
   import FilterButtons from '@/components/filter-buttons.svelte'
 
   // props
-  export let todos = []
+  export let todos: Todos = []
 
-  // local, reactive
+  // local
   let filter: Filters = Filters.ALL
-  $: numTodos = todos.length
-  $: numCompletedTodos = todos.filter((todo) => todo.completed).length
-  $: newTodoId = numTodos ? Math.max(...todos.map((todo) => todo.id)) + 1 : 1
+  let todoStatus // a reference to TodoStatus component instance
 
-  // handlers
+  // reactive
+  $: newTodoId = todos.length
+    ? Math.max(...todos.map((todo) => todo.id)) + 1
+    : 1
+
+  // event handlers
   function removeTodo(todo: Todo) {
     todos = todos.filter((t) => t.id !== todo.id)
+    todoStatus.focus() // use ref to TodoStatus instance to call `.focus()`
   }
 
   function updateTodo(updatedTodo: Todo) {
@@ -41,20 +46,15 @@
   }
 </script>
 
-<!-- Todos -->
 <div class="px-20">
   <h1 class="text-2xl font-extrabold">Svelte To-do App</h1>
 
-  <!-- NewTodo -->
   <NewTodo on:add={(e) => addTodo(e.detail.newTask)} />
 
-  <!-- Filter -->
   <FilterButtons bind:filter />
 
-  <!-- Stats -->
-  <h2 id="list-heading">{numCompletedTodos} out of {numTodos} completed</h2>
+  <TodoStatus {todos} bind:this={todoStatus} />
 
-  <!-- TodoList -->
   <ul role="list" aria-labelledby="list-heading">
     {#each filterTodos(filter, todos) as todo (todo.id)}
       <TodoItem
@@ -63,11 +63,10 @@
         on:remove={(e) => removeTodo(e.detail.todo)}
       />
     {:else}
-      <li>nothing to do</li>
+      <li>Nothing to do here!</li>
     {/each}
   </ul>
 
-  <!-- More Actions -->
   <MoreActions
     {todos}
     {filter}
