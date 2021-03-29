@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { alertStore } from '@/stores/alert-store'
+  import { fly } from 'svelte/transition'
 
   let visible: boolean
   let timeout: number
@@ -31,6 +32,7 @@
     role="alert"
     class="z-50 fixed cursor-pointer text-sm font-medium mx-6 opacity-90 bg-gray-400 right-0 mt-4 text-white flex py-2 px-3"
     on:click={() => (visible = false)}
+    transition:fly={{ delay: 250, duration: 300, x: 0, y: -100, opacity: 0.5 }}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
