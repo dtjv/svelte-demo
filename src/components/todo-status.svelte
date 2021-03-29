@@ -12,7 +12,7 @@
   $: numCompletedTodos = todos.filter((todo) => todo.completed).length
 
   // read only export
-  export function focus() {
+  export function focus(): void {
     headingEl.focus()
   }
 </script>
