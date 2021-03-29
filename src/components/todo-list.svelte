@@ -3,6 +3,7 @@
   import type { Todos } from '@/types/todos.type'
   import { Filters } from '@/types/filters.enum'
   import { filterTodos } from '@/utils/filter-todos'
+  import { alertStore } from '@/stores/alert-store'
   import TodoStatus from '@/components/todo-status.svelte'
   import TodoItem from '@/components/todo-item.svelte'
   import NewTodo from '@/components/new-todo.svelte'
@@ -14,7 +15,7 @@
 
   // local
   let filter: Filters = Filters.ALL
-  let todoStatus // a reference to TodoStatus component instance
+  let todoStatus: TodoStatus // a reference to TodoStatus component instance
 
   // reactive
   $: newTodoId = todos.length
@@ -32,8 +33,11 @@
     todos[index] = { ...todos[index], ...updatedTodo }
   }
 
+  // note: '$store' syntax is available within svelte components only. outside a
+  // svelte component we need to use `.subscribe` and `.set` methods directly.
   function addTodo(newTask: string) {
     todos = [...todos, { id: newTodoId, task: newTask, completed: false }]
+    $alertStore = `Added '${newTask}' to the list`
     newTask = ''
   }
 

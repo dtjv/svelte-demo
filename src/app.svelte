@@ -3,6 +3,7 @@
 <script lang="ts">
   import type { Todo } from '@/types/todo.type'
   import TodoList from '@/components/todo-list.svelte'
+  import Alert from '@/components/alert.svelte'
 
   let todos: Todo[] = [
     { id: 1, task: 'Create a Svelte starter app', completed: true },
@@ -12,6 +13,7 @@
 </script>
 
 <main>
+  <Alert />
   <TodoList {todos} />
 </main>
 
