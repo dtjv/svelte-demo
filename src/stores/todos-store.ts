@@ -8,4 +8,4 @@ const initialTodos: Todos = [
   { id: 3, task: 'Complete the rest of the tutorial', completed: false },
 ]
 
-export const todosStore = localStore(key, initialTodos)
+export const todosStore = localStore<Todos>(key, initialTodos)
