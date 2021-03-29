@@ -79,6 +79,10 @@ export default {
           replacement: path.resolve(projectRootDir, 'src/utils'),
         },
         {
+          find: '@/stores',
+          replacement: path.resolve(projectRootDir, 'src/stores'),
+        },
+        {
           find: '@/actions',
           replacement: path.resolve(projectRootDir, 'src/actions'),
         },
