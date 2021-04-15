@@ -57,6 +57,7 @@
 
   <FilterButtons bind:filter />
 
+  <!-- bind this component to the reference variable `todoStatus` -->
   <TodoStatus {todos} bind:this={todoStatus} />
 
   <ul role="list" aria-labelledby="list-heading">
