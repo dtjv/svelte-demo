@@ -1,6 +1,6 @@
 # svelte-demo
 
-Practice apps in Svelte.
+Svelte apps for practice.
 
 ## License
 
